@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: spboot-hello-world-docker-config
 data:
-  APP_MESSAGE: "Hello from Kubernetes ConfigMap!"
+  ENV_VALUE: "Hello from Kubernetes ConfigMap!"
