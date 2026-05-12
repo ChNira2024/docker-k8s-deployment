@@ -63,7 +63,7 @@ spboot-hello-world-docker-secret   Opaque   1      2m
 PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
 PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
 
-To access in browser::-
+To access in browser::-(i am using docker kuberneetes so localhost only support, if u use minikube then u can use provided nodeport id to access)
 http://localhost:32000/
 ----------------------
 {
