@@ -63,9 +63,9 @@ spboot-hello-world-docker-secret   Opaque   1      2m
 PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
 PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
 
-
+To access in browser::-
 http://localhost:32000/
-
+----------------------
 {
 "container": "spboot-hello-world-docker-deployment-7b769bb457-2z4v8",
 "env": "Hello from Kubernetes ConfigMap!",
