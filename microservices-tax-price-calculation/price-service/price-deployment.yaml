@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: price-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: price-service
+  template:
+    metadata:
+      labels:
+        app: price-service
+    spec:
+      containers:
+        - name: price-service
+          image: niranjana1992/price-service-image:1.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
