@@ -1,0 +1,73 @@
+I am running kubernetes inside Docker Desktop. Before executing must start "Docker Desktop" then run command using windows  powershell.
+Clone the repository and then Go to file path as shown below...
+
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> ls
+
+    Directory: C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        12-05-2026     12:57            477 deployment.yaml
+-a----        12-05-2026     12:57            232 service.yaml
+
+
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl version --client
+Client Version: v1.34.1
+Kustomize Version: v5.7.1
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl get nodes
+NAME             STATUS   ROLES           AGE   VERSION
+docker-desktop   Ready    control-plane   18m   v1.34.1
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl get pods
+No resources found in default namespace.
+
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\config> kubectl apply -f configmap.yaml
+configmap/spboot-hello-world-docker-config created
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\config> kubectl apply -f secret.yaml
+secret/spboot-hello-world-docker-secret created
+
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\config>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\config> cd..
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker> cd backend
+
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl apply -f deployment.yaml
+deployment.apps/spboot-hello-world-docker-deployment created
+
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl apply -f service.yaml
+service/spboot-hello-world-docker-service created
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl get pods
+NAME                                                    READY   STATUS    RESTARTS   AGE
+spboot-hello-world-docker-deployment-5547ccdd77-h7ntv   1/1     Running   0          26s
+spboot-hello-world-docker-deployment-5547ccdd77-hp5dx   1/1     Running   0          26s
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl get svc
+NAME                                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes                          ClusterIP   10.96.0.1       <none>        443/TCP        42m
+spboot-hello-world-docker-service   NodePort    10.102.114.54   <none>        80:32000/TCP   23s
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl get configmap
+NAME                               DATA   AGE
+kube-root-ca.crt                   1      42m
+spboot-hello-world-docker-config   1      113s
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend> kubectl get secret
+NAME                               TYPE     DATA   AGE
+spboot-hello-world-docker-secret   Opaque   1      2m
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+PS C:\EmbarkX\docker-k8s-deployment\spboot-hello-world-docker\backend>
+
+
+http://localhost:32000/
+
+{
+"container": "spboot-hello-world-docker-deployment-7b769bb457-2z4v8",
+"env": "Hello from Kubernetes ConfigMap!",
+"message": "Hello from Simple App (Spring Boot)"
+}
