@@ -1,0 +1,76 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\niran> cd C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-service
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-service> kubectl apply -f tax-deployment.yaml
+deployment.apps/tax-service-deployment unchanged
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-service> kubectl apply -f tax-service.yaml
+service/tax-service created
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-service> cd..
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation> cd price-service
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl apply -f price-service/price-deployment.yaml
+error: the path "price-service/price-deployment.yaml" does not exist
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl apply -f price-deployment.yaml
+deployment.apps/price-service-deployment created
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Users\niran> cd C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl apply -f price-service.yaml
+service/price-service created
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl get pods
+NAME                                                    READY   STATUS    RESTARTS   AGE
+price-service-deployment-7bb64c848c-tg8pc               1/1     Running   0          4m8s
+spboot-hello-world-docker-deployment-7b769bb457-2z4v8   1/1     Running   0          5h44m
+spboot-hello-world-docker-deployment-7b769bb457-rzsx6   1/1     Running   0          5h44m
+tax-service-deployment-7f64f4586c-p2vrv                 1/1     Running   0          6m11s
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl get svc
+NAME                                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes                          ClusterIP   10.96.0.1       <none>        443/TCP          6h42m
+price-service                       NodePort    10.107.83.130   <none>        3000:31000/TCP   77s
+spboot-hello-world-docker-service   NodePort    10.104.251.15   <none>        80:32000/TCP     5h45m
+tax-service                         ClusterIP   10.99.36.12     <none>        4000/TCP         6m25s
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl delete pod tax-service-deployment-7f64f4586c-p2vrv
+pod "tax-service-deployment-7f64f4586c-p2vrv" deleted from default namespace
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl get pods
+NAME                                                    READY   STATUS    RESTARTS   AGE
+price-service-deployment-7bb64c848c-tg8pc               1/1     Running   0          11m
+spboot-hello-world-docker-deployment-7b769bb457-2z4v8   1/1     Running   0          5h52m
+spboot-hello-world-docker-deployment-7b769bb457-rzsx6   1/1     Running   0          5h52m
+tax-service-deployment-7f64f4586c-f8mpj                 1/1     Running   0          8s
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl delete deployment price-service
+Error from server (NotFound): deployments.apps "price-service" not found
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl get deployments
+NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
+price-service-deployment               1/1     1            1           13m
+spboot-hello-world-docker-deployment   2/2     2            2           5h53m
+tax-service-deployment                 1/1     1            1           15m
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl delete deployment spboot-hello-world-docker-deployment
+deployment.apps "spboot-hello-world-docker-deployment" deleted from default namespace
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl delete deployment price-service-deployment
+deployment.apps "price-service-deployment" deleted from default namespace
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl delete deployment tax-service-deployment
+deployment.apps "tax-service-deployment" deleted from default namespace
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl get deployments
+No resources found in default namespace.
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
