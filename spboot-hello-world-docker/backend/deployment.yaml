@@ -15,5 +15,16 @@ spec:
       containers:
         - name: spboot-hello-world-docker-container
           image: niranjana1992/spboot-hello-world-docker-image:latest
+          env:
+            - name: APP_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: spboot-hello-world-docker-config
+                  key: APP_MESSAGE
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spboot-hello-world-docker-secret
+                  key: DB_PASSWORD
           ports:
             - containerPort: 2828
