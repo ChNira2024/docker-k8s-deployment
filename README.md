@@ -1,3 +1,6 @@
 ## Project Repository
-Check out the source code here:  
-[Spring Boot Microservice Project](https://github.com/niranjana1992/my-springboot-project)
+Check out the source code for spboot-hello-world-docker:  
+https://github.com/username/repository-name
+
+Check out the source code for microservices-tax-price-calculation:  
+https://github.com/username/repository-name
