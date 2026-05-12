@@ -16,11 +16,11 @@ spec:
         - name: spboot-hello-world-docker-container
           image: niranjana1992/spboot-hello-world-docker-image:latest
           env:
-            - name: APP_MESSAGE
+            - name: ENV_VALUE
               valueFrom:
                 configMapKeyRef:
                   name: spboot-hello-world-docker-config
-                  key: APP_MESSAGE
+                  key: ENV_VALUE
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
