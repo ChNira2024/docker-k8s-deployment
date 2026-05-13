@@ -1,0 +1,273 @@
+Here 2 repository, One is for source code and another is for deployment..
+
+for source code location is:
+https://github.com/ChNira2024/microservices-tax-price-calculation
+├── tax-service(spboot project)
+ ├── price-service(spboot project)
+ 
+for deployment github location is: 
+https://github.com/ChNira2024/docker-k8s-deployment
+├── .github/workflows/
+│     └── tax-price-calculation-ci-cd.yml
+│
+├── microservices-tax-price-calculation/
+│     ├── tax-service
+              tax-deployment.yaml
+              tax-service.yaml 
+      ├── price-service
+           price-deployment.yaml
+     	  price-service.yaml 
+│
+└── k8s/aws/microservices-tax-price-calculation
+      ├── tax-service
+              tax-deployment.yaml
+              tax-service.yaml 
+      ├── price-service
+           price-deployment.yaml
+     	  price-service.yaml  
+ 
+
+-----------------------below is pushing to docker hub but aws eks fail becoz of credential---------------------------------------------------
+name: Tax Price Calculator CI/CD to AWS EKS
+
+on:
+  workflow_dispatch
+
+jobs:
+
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [tax-service, price-service]
+
+    steps:
+      # 1. Checkout CI repo (this repo)
+      - name: Checkout CI Repo
+        uses: actions/checkout@v4
+
+      # 2. Checkout SOURCE CODE repo
+      - name: Checkout Source Code Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ChNira2024/microservices-tax-price-calculation
+          path: app-code
+
+      # 3. Setup Java
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # 4. Build
+      - name: Build Service
+        working-directory: app-code/${{ matrix.service }}
+        run: mvn -B clean verify
+
+
+  docker-build-push:
+    runs-on: ubuntu-latest
+    needs: build-test
+    strategy:
+      matrix:
+        service: [tax-service, price-service]
+
+    steps:
+      - name: Checkout CI Repo
+        uses: actions/checkout@v4
+
+      - name: Checkout Source Code Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ChNira2024/microservices-tax-price-calculation
+          path: app-code
+
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build JAR
+        working-directory: app-code/${{ matrix.service }}
+        run: mvn -B clean package -DskipTests
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build & Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: app-code/${{ matrix.service }}
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:latest
+
+
+  deploy-aws-eks:
+    runs-on: ubuntu-latest
+    needs: docker-build-push
+
+    steps:
+      - name: Checkout CI Repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name hello-cluster --region ap-south-1
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/aws/microservices-tax-price-calculation/tax-service
+          kubectl apply -f k8s/aws/microservices-tax-price-calculation/price-service
+
+--------------------------------------------------------------------------------------------------------------------		  
+NOTE: Here i click action->workflow manually to start the pipeline becoz both are not connected means if i chnage source code then it will not start/trigger the pipeline becoz both are different repository 
+so not connected...For automatic trigger when code changes happens, pipeline start automatice for this scenario follow below code...
+
+Repo 1 → microservices-tax-price-calculation (CI)
+Repo 2 → docker-k8s-deployment (CD)
+
+1. CI PIPELINE 
+ In: microservices-tax-price-calculation repo, create action workflow..
+.github/workflows/ci.yml
+--------------------------
+name: CI - Build, Push & Trigger CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service: [tax-service, price-service]
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Setup Java
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      # 3. Build JAR
+      - name: Build Service
+        working-directory: ${{ matrix.service }}
+        run: mvn clean package -DskipTests
+
+      # 4. Docker Login
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 5. Build & Push Docker Image
+      - name: Build & Push Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:${{ github.sha }} ./${{ matrix.service }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:${{ github.sha }}
+
+      # 6. Trigger CD Pipeline (IMPORTANT)
+      - name: Trigger CD Repo
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
+          -H "Accept: application/vnd.github+json" \
+          https://api.github.com/repos/ChNira2024/docker-k8s-deployment/actions/workflows/cd.yml/dispatches \
+          -d '{"ref":"main"}'
+
+=>Add in code repo:
+DOCKER_USERNAME
+DOCKER_PASSWORD
+PAT_TOKEN
+👉 PAT_TOKEN = GitHub Personal Access Token (repo access)		  
+
+2. CD PIPELINE (INFRA REPO)
+In: docker-k8s-deployment repo, create action workflow..
+.github/workflows/cd.yml
+--------------------------------
+name: CD - Deploy to AWS EKS
+
+on:
+  workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout infra repo
+      - name: Checkout Infra Repo
+        uses: actions/checkout@v4
+
+      # 2. Configure AWS
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      # 3. Setup kubectl
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+
+      # 4. Connect to EKS
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name hello-cluster --region ap-south-1
+
+      # 5. Deploy
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/aws/microservices-tax-price-calculation/tax-service
+          kubectl apply -f k8s/aws/microservices-tax-price-calculation/price-service
+
+=>REQUIRED SECRETS (INFRA REPO)
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+
+Code Push (Repo 1)
+      ↓
+CI runs automatically ✅
+      ↓
+Build + Docker Push
+      ↓
+Trigger CD Repo via API ✅
+      ↓
+CD pipeline starts
+      ↓
+Deploy to AWS EKS 🚀
+
+Why workflow_dispatch in CD?
+
+👉 Because CI triggers it manually using API
+👉 So no need for push here
+
+✅ Why PAT_TOKEN?
+👉 Needed to call another repo’s workflow
+👉 Without it → ❌ trigger fails		  
