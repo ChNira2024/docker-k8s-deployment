@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'microservices-tax-price-calculation/**'
-      - 'k8s/**'
+  # This allows you to run the action manually from the "Actions" tab
+  workflow_dispatch: 
 
 jobs:
   build-and-deploy:
@@ -26,14 +25,13 @@ jobs:
           cache: 'maven'
 
       # 3. Build Tax Service
-      # Note: Removed the redundant /tax-service/tax-service path
       - name: Build Tax Service
-        working-directory: ./microservices-tax-price-calculation/tax-service
+        working-directory: microservices-tax-price-calculation/tax-service
         run: mvn clean package -DskipTests
 
       # 4. Build Price Service
       - name: Build Price Service
-        working-directory: ./microservices-tax-price-calculation/price-service
+        working-directory: microservices-tax-price-calculation/price-service
         run: mvn clean package -DskipTests
 
       # 5. Docker Login
@@ -60,18 +58,17 @@ jobs:
         uses: azure/setup-kubectl@v4
 
       # 9. Set kubeconfig & Deploy
-      # Using a more secure method to handle the kubeconfig file
       - name: Deploy to K8s
         env:
           KUBECONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         run: |
           mkdir -p ~/.kube
-          echo "$KUBECONFIG_DATA" > ~/.kube/config
+          echo "$KUBECONFIG_DATA" | base64 --decode > ~/.kube/config || echo "$KUBECONFIG_DATA" > ~/.kube/config
           
-          # Deploying services one by one based on your folder structure
+          # Deploying specific folders
           kubectl apply -f k8s/aws/microservices-tax-price-calculation/tax-service/
           kubectl apply -f k8s/aws/microservices-tax-price-calculation/price-service/
           
-          # Optional: Force a rollout restart to pick up the latest 'latest' tag
-          kubectl rollout restart deployment/tax-deployment
-          kubectl rollout restart deployment/price-deployment
+          # Force refresh
+          kubectl rollout restart deployment/tax-deployment || echo "Deployment not found, skipping restart"
+          kubectl rollout restart deployment/price-deployment || echo "Deployment not found, skipping restart"
