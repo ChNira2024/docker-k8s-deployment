@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  # This allows you to run the action manually from the "Actions" tab
   workflow_dispatch: 
 
 jobs:
@@ -24,15 +23,13 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      # 3. Build Tax Service
+      # 3. Build Tax Service (using explicit path to pom.xml)
       - name: Build Tax Service
-        working-directory: microservices-tax-price-calculation/tax-service
-        run: mvn clean package -DskipTests
+        run: mvn clean package -DskipTests -f microservices-tax-price-calculation/tax-service/pom.xml
 
-      # 4. Build Price Service
+      # 4. Build Price Service (using explicit path to pom.xml)
       - name: Build Price Service
-        working-directory: microservices-tax-price-calculation/price-service
-        run: mvn clean package -DskipTests
+        run: mvn clean package -DskipTests -f microservices-tax-price-calculation/price-service/pom.xml
 
       # 5. Docker Login
       - name: Docker Login
@@ -57,18 +54,19 @@ jobs:
       - name: Set up kubectl
         uses: azure/setup-kubectl@v4
 
-      # 9. Set kubeconfig & Deploy
+      # 9. Deploy to K8s
       - name: Deploy to K8s
         env:
           KUBECONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         run: |
           mkdir -p ~/.kube
-          echo "$KUBECONFIG_DATA" | base64 --decode > ~/.kube/config || echo "$KUBECONFIG_DATA" > ~/.kube/config
+          # Handles both raw text and base64 encoded kubeconfig
+          echo "$KUBECONFIG_DATA" | base64 --decode > ~/.kube/config 2>/dev/null || echo "$KUBECONFIG_DATA" > ~/.kube/config
           
           # Deploying specific folders
           kubectl apply -f k8s/aws/microservices-tax-price-calculation/tax-service/
           kubectl apply -f k8s/aws/microservices-tax-price-calculation/price-service/
           
-          # Force refresh
-          kubectl rollout restart deployment/tax-deployment || echo "Deployment not found, skipping restart"
-          kubectl rollout restart deployment/price-deployment || echo "Deployment not found, skipping restart"
+          # Restart deployments to pull new 'latest' images
+          kubectl rollout restart deployment/tax-deployment || echo "Tax deployment not found"
+          kubectl rollout restart deployment/price-deployment || echo "Price deployment not found"
