@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tax-price
+  template:
+    metadata:
+      labels:
+        app: tax-price
+    spec:
+      containers:
+        - name: tax-price-frontend
+          image: niranjana1992/tax-price-calculation-react-k8s-image:1.3
+          ports:
+            - containerPort: 80
