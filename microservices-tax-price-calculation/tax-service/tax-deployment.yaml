@@ -14,6 +14,9 @@ spec:
     spec:
       containers:
         - name: tax-service
-          image: niranjana1992/tax-service-image:1.0
+          image: niranjana1992/tax-service-image:1.1
           ports:
             - containerPort: 4000
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
