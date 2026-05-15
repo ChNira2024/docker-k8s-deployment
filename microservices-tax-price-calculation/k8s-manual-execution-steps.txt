@@ -70,6 +70,8 @@ Response:
     "container": "price-service-deployment-9bc876ddf-qqwtm",
     "taxServiceContainer": "tax-service-deployment-7bf5889d45-szsjx"
 }
+Note: Check in Network tab->request->request response->it must access-control-allow-origin: http://localhost:30000
+
 Request: http://localhost:3000/api/price?amount=1000&country=IN
 Response:
 {
