@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: tax-price-frontend
-          image: niranjana1992/tax-price-calculation-react-image:1.2
+          image: niranjana1992/tax-price-calculation-react-k8s-image:1.3
           ports:
             - containerPort: 80
