@@ -38,34 +38,74 @@ PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-pr
 service/frontend-service unchanged
 PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react>
 
-PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl get pods
+PS C:\EmbarkX\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl get pods
 NAME                                       READY   STATUS    RESTARTS   AGE
-frontend-deployment-f7f965cbd-dvrxr        1/1     Running   0          41m
-price-service-deployment-9bc876ddf-hv7rx   1/1     Running   0          12s
-tax-service-deployment-7bf5889d45-4v8z8    1/1     Running   0          77m
-PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service> kubectl get svc
+frontend-deployment-f7f965cbd-tf268        1/1     Running   0          110s
+price-service-deployment-9bc876ddf-qqwtm   1/1     Running   0          3m17s
+tax-service-deployment-7bf5889d45-szsjx    1/1     Running   0          4m32s
+PS C:\EmbarkX\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl get svc
 NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-frontend-service                    NodePort    10.100.162.123   <none>        80:30000/TCP     85m
-kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          3d5h
-price-service                       NodePort    10.107.83.130    <none>        3000:31000/TCP   2d23h
-tax-service                         ClusterIP   10.99.36.12      <none>        4000/TCP         2d23h
-PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\price-service>
+frontend-service                    NodePort    10.102.83.101    <none>        80:30000/TCP     111s
+kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          3d9h
+price-service                       NodePort    10.107.99.95     <none>        3000:31000/TCP   2m57s
+spboot-hello-world-docker-service   NodePort    10.104.251.15    <none>        80:32000/TCP     3d8h
+tax-service                         ClusterIP   10.100.117.192   <none>        4000/TCP         4m5s
+PS C:\EmbarkX\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react>
+PS C:\EmbarkX\microservices-tax-price-calculation\price-service> docker ps
+CONTAINER ID   IMAGE                                   COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+750c6b5724f1   niranjana1992/price-service-image:1.2   "/__cacert_entrypoin…"   21 seconds ago   Up 21 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   price-service
+688f5d82c4cf   niranjana1992/tax-service-image:1.1     "/__cacert_entrypoin…"   3 minutes ago    Up 3 minutes    0.0.0.0:4000->4000/tcp, [::]:4000->4000/tcp   tax-service
+PS C:\EmbarkX\microservices-tax-price-calculation\price-service>
 
-PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl describe pod frontend-deployment-f7f965cbd-dvrxr | findstr Image
+To access go to browser and then request:
+----------------------------------------------
+Request: http://localhost:30000/
+Response: 
+{
+    "service": "Price-Service",
+    "amount": 10000.0,
+    "taxPercent": 18.0,
+    "taxAmount": 1800.0,
+    "total": 11800.0,
+    "container": "price-service-deployment-9bc876ddf-qqwtm",
+    "taxServiceContainer": "tax-service-deployment-7bf5889d45-szsjx"
+}
+Request: http://localhost:3000/api/price?amount=1000&country=IN
+Response:
+{
+  "service": "Price-Service",
+  "amount": 1000,
+  "taxPercent": 18,
+  "taxAmount": 180,
+  "total": 1180,
+  "container": "750c6b5724f1",
+  "taxServiceContainer": "688f5d82c4cf"
+}
+Request: http://localhost:4000/api/tax?country=IN
+Response:
+{
+  "service": "Tax-Service",
+  "country": "IN",
+  "tax": 18,
+  "container": "688f5d82c4cf"
+}
+
+
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl describe pod frontend-deployment-f7f965cbd-tf268 | findstr Image
     Image:          niranjana1992/tax-price-calculation-react-k8s-image:1.3
     Image ID:       docker-pullable://niranjana1992/tax-price-calculation-react-k8s-image@sha256:1c36d103711dc4d7b011f019a10da7b20a0386f8ced709a3926f6e81a16d9fe9
 PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-dvrxr -- cat /usr/share/nginx/html/index.html | findstr 3000
-PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-dvrxr -- grep -r "localhost" /usr/share/nginx/html/assets/
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-tf268 -- grep -r "localhost" /usr/share/nginx/html/assets/
 /usr/share/nginx/html/assets/index-F52FKbum.js:`).
 
-PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-dvrxr -- grep -o "localhost:[0-9]*" /usr/share/nginx/html/assets/index-BvBAJDaU.js
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-tf268 -- grep -o "localhost:[0-9]*" /usr/share/nginx/html/assets/index-BvBAJDaU.js
 grep: /usr/share/nginx/html/assets/index-BvBAJDaU.js: No such file or directory
 command terminated with exit code 2
 PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react>
 PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react>
-PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-dvrxr -- ls /usr/share/nginx/html/assets/
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-tf268 -- ls /usr/share/nginx/html/assets/
 index-DRSEYTA8.css  index-F52FKbum.js
-PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-dvrxr -- grep -o "localhost:[0-9]*" /usr/share/nginx/html/assets/index-F52FKbum.js
+PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react> kubectl exec -it frontend-deployment-f7f965cbd-tf268 -- grep -o "localhost:[0-9]*" /usr/share/nginx/html/assets/index-F52FKbum.js
 localhost:31000
 localhost:31000
 PS C:\Niranjana\docker-k8s-deployment\microservices-tax-price-calculation\tax-price-calculation-react>
