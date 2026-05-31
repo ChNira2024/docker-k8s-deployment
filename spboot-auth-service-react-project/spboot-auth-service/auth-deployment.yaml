@@ -1,1 +1,28 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-service
+          image: niranjana1992/spboot-auth-service:latest
+          ports:
+            - containerPort: 8085
+          env:
+            - name: DB_URL
+              value: jdbc:postgresql://postgres:5432/spboot-auth-service
+            - name: DB_USERNAME
+              value: postgres
+            - name: DB_PASSWORD
+              value: sisu
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
