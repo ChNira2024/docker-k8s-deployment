@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-service
+  name: hello-world-service-deployment
 spec:
   replicas: 1
   selector:
@@ -13,8 +13,8 @@ spec:
         app: hello-world-service
     spec:
       containers:
-        - name: hello
-          image: yourusername/hello-service:latest
+        - name: hello-world-service
+          image: niranjana1992/hello-world-service:latest
           ports:
             - containerPort: 8086
           env:
@@ -32,3 +32,4 @@ spec:
   ports:
     - port: 8086
       targetPort: 8086
+  type: ClusterIP
