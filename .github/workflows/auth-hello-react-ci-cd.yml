@@ -1,0 +1,87 @@
+# name: Full CI/CD Pipeline
+
+# on:
+#   push:
+#     branches: [ "main" ]
+
+# jobs:
+#   build-deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       # =========================
+#       # SETUP KUBECTL
+#       - name: Setup kubectl
+#         uses: azure/setup-kubectl@v4
+
+#       # DOCKER LOGIN
+#       - name: Login Docker Hub
+#         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+#       # AUTH SERVICE BUILD + PUSH
+#       - name: Build Auth
+#         run: |
+#           cd spboot-auth-service
+#           mvn clean package -DskipTests
+
+#       - name: Docker Build Auth
+#         run: |
+#           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/spboot-auth-service:latest spboot-auth-service
+
+#       - name: Push Auth
+#         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/spboot-auth-service:latest
+        
+#       # HELLO SERVICE
+#       - name: Build Hello
+#         run: |
+#           cd hello-world-service
+#           mvn clean package -DskipTests
+
+#       - name: Docker Build Hello
+#         run: |
+#           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-service:latest hello-world-service
+
+#       - name: Push Hello
+#         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-service:latest
+
+#       # REACT APP
+#       - name: Build React
+#         run: |
+#           cd auth-app-react
+#           npm install
+#           npm run build
+
+#       - name: Docker Build React
+#         run: |
+#           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/auth-app-react:latest auth-app-react
+
+#       - name: Push React
+#         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/auth-app-react:latest
+
+#       # =========================
+#       # DEPLOY TO KUBERNETES
+#       # =========================
+#       - name: Configure kubeconfig
+#         run: |
+#           echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
+#           export KUBECONFIG=$PWD/kubeconfig
+
+#       - name: Update Kubernetes Deployments
+#         run: |
+#           kubectl set image deployment/spboot-auth-service-deployment \
+#             auth-service=${{ secrets.DOCKERHUB_USERNAME }}/spboot-auth-service:latest
+
+#           kubectl set image deployment/hello-world-service-deployment \
+#             hello-service=${{ secrets.DOCKERHUB_USERNAME }}/hello-world-service:latest
+
+#           kubectl set image deployment/auth-hello-react-deployment \
+#             react-app=${{ secrets.DOCKERHUB_USERNAME }}/auth-app-react-k8s:latest
+
+#       - name: Restart rollout
+#         run: |
+#           kubectl rollout status deployment spboot-auth-service-deployment
+#           kubectl rollout status deployment hello-world-service-deployment
+#           kubectl rollout status deployment auth-hello-react-deployment
