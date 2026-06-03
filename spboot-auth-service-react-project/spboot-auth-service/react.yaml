@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-app
+  name: auth-hello-react-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: react-app
+      app: auth-hello
   template:
     metadata:
       labels:
-        app: react-app
+        app: auth-hello
     spec:
       containers:
-        - name: react
-          image: yourusername/react-app:latest
+        - name: auth-hello-frontend
+          image: niranjana1992/auth-app-react-k8s:latest
           ports:
             - containerPort: 80
 
@@ -22,10 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-service
+  name: auth-hello-react-service
 spec:
   selector:
-    app: react-app
+    app: auth-hello
   ports:
     - port: 80
       targetPort: 80
+      nodePort: 30000
+  type: NodePort
