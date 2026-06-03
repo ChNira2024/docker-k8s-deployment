@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spboot-auth-service
-          image: niranjana1991/spboot-auth-service:latest
+          image: niranjana1992/spboot-auth-service:latest
           ports:
             - containerPort: 8084
           env:
