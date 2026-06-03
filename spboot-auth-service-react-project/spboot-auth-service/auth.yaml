@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spboot-auth-service
+  name: spboot-auth-service-deployment
 spec:
   replicas: 1
   selector:
@@ -13,8 +13,8 @@ spec:
         app: spboot-auth-service
     spec:
       containers:
-        - name: auth
-          image: yourusername/auth-service:latest
+        - name: spboot-auth-service
+          image: niranjana1991/spboot-auth-service:latest
           ports:
             - containerPort: 8084
           env:
@@ -31,10 +31,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: spboot-auth-service
 spec:
   selector:
     app: spboot-auth-service
   ports:
     - port: 8084
       targetPort: 8084
+      nodePort: 31000
+  type: NodePort
+      
