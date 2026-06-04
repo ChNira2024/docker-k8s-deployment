@@ -1,9 +1,9 @@
-PS C:\Users\niran> cd C:\project\EmbarkX\docker-k8s-deployment
-PS C:\project\EmbarkX\docker-k8s-deployment>
-PS C:\project\EmbarkX\docker-k8s-deployment> ls
+PS C:\Users\niran> cd C:\project\Niranjana\docker-k8s-deployment
+PS C:\project\Niranjana\docker-k8s-deployment>
+PS C:\project\Niranjana\docker-k8s-deployment> ls
 
 
-    Directory: C:\project\EmbarkX\docker-k8s-deployment
+    Directory: C:\project\Niranjana\docker-k8s-deployment
 
 
 Mode                 LastWriteTime         Length Name
@@ -16,12 +16,12 @@ d-----        03-06-2026     18:26                spboot-hello-world-docker
 -a----        03-06-2026     18:26            283 README.md
 
 
-PS C:\project\EmbarkX\docker-k8s-deployment> cd .\spboot-auth-service-react-project\
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> ls
+PS C:\project\Niranjana\docker-k8s-deployment> cd .\spboot-auth-service-react-project\
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> ls
 
 
-    Directory: C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project
+    Directory: C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project
 
 
 Mode                 LastWriteTime         Length Name
@@ -29,11 +29,11 @@ Mode                 LastWriteTime         Length Name
 d-----        03-06-2026     18:26                spboot-auth-service
 
 
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> cd .\spboot-auth-service\
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> ls
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> cd .\spboot-auth-service\
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> ls
 
 
-    Directory: C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service
+    Directory: C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service
 
 
 Mode                 LastWriteTime         Length Name
@@ -44,92 +44,92 @@ Mode                 LastWriteTime         Length Name
 -a----        03-06-2026     18:26            620 react.yaml
 
 
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f postgres.yaml
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f postgres.yaml
 deployment.apps/postgres created
 service/postgres-service created
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get deployment
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get deployment
 NAME       READY   UP-TO-DATE   AVAILABLE   AGE
 postgres   1/1     1            1           27s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get svc
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get svc
 NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
 kubernetes         ClusterIP   10.96.0.1      <none>        443/TCP    22d
 postgres-service   ClusterIP   10.101.76.21   <none>        5432/TCP   37s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get pods
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get pods
 NAME                       READY   STATUS    RESTARTS   AGE
 postgres-955dc4f4d-zghvw   1/1     Running   0          45s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f hello.yaml
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f hello.yaml
 deployment.apps/hello-world-service-deployment created
 service/hello-world-service created
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get deployment
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get deployment
 NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
 hello-world-service-deployment   1/1     1            1           20s
 postgres                         1/1     1            1           101s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get svc
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get svc
 NAME                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 hello-world-service   ClusterIP   10.108.89.171   <none>        8086/TCP   26s
 kubernetes            ClusterIP   10.96.0.1       <none>        443/TCP    22d
 postgres-service      ClusterIP   10.101.76.21    <none>        5432/TCP   107s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get pods
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get pods
 NAME                                              READY   STATUS    RESTARTS   AGE
 hello-world-service-deployment-6c75ccb68f-pfcb8   1/1     Running   0          36s
 postgres-955dc4f4d-zghvw                          1/1     Running   0          117s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f auth.yaml
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f auth.yaml
 deployment.apps/spboot-auth-service-deployment created
 service/spboot-auth-service created
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f react.yaml
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f react.yaml
 deployment.apps/auth-hello-react-deployment created
 service/auth-hello-react-service created
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get svc
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get svc
 NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 auth-hello-react-service   NodePort    10.103.14.105   <none>        80:30000/TCP     25s
 hello-world-service        ClusterIP   10.108.89.171   <none>        8086/TCP         2m42s
 kubernetes                 ClusterIP   10.96.0.1       <none>        443/TCP          22d
 postgres-service           ClusterIP   10.101.76.21    <none>        5432/TCP         4m3s
 spboot-auth-service        NodePort    10.101.59.82    <none>        8084:31000/TCP   117s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get pods
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get pods
 NAME                                              READY   STATUS         RESTARTS   AGE
 auth-hello-react-deployment-7d49ddc8d6-mmqjl      1/1     Running        0          30s
 hello-world-service-deployment-6c75ccb68f-pfcb8   1/1     Running        0          2m47s
 postgres-955dc4f4d-zghvw                          1/1     Running        0          4m8s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f auth.yaml
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl apply -f auth.yaml
 deployment.apps/spboot-auth-service-deployment configured
 service/spboot-auth-service unchanged
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get deployment
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get deployment
 NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
 auth-hello-react-deployment      1/1     1            1           5m37s
 hello-world-service-deployment   1/1     1            1           7m54s
 postgres                         1/1     1            1           9m15s
 spboot-auth-service-deployment   1/1     1            1           7m9s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get svc
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get svc
 NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 auth-hello-react-service   NodePort    10.103.14.105   <none>        80:30000/TCP     5m46s
 hello-world-service        ClusterIP   10.108.89.171   <none>        8086/TCP         8m3s
 kubernetes                 ClusterIP   10.96.0.1       <none>        443/TCP          22d
 postgres-service           ClusterIP   10.101.76.21    <none>        5432/TCP         9m24s
 spboot-auth-service        NodePort    10.101.59.82    <none>        8084:31000/TCP   7m18s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get pods
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl get pods
 NAME                                              READY   STATUS    RESTARTS   AGE
 auth-hello-react-deployment-7d49ddc8d6-mmqjl      1/1     Running   0          5m52s
 hello-world-service-deployment-6c75ccb68f-pfcb8   1/1     Running   0          8m9s
 postgres-955dc4f4d-zghvw                          1/1     Running   0          9m30s
 spboot-auth-service-deployment-8644745cbb-gcts5   1/1     Running   0          22s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service>
 
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl logs spboot-auth-service-deployment-8644745cbb-gcts5
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl logs spboot-auth-service-deployment-8644745cbb-gcts5
 
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl exec -it spboot-auth-service-deployment-8644745cbb-gcts5 -- sh
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project\spboot-auth-service> kubectl exec -it spboot-auth-service-deployment-8644745cbb-gcts5 -- sh
 # wget -qO- http://hello-world-service:8086
 # wget -qO- http://hello-world-service:8086/hello
 # wget -S -O- http://hello-world-service:8086/api/v1/hello
@@ -150,37 +150,37 @@ HTTP request sent, awaiting response...
   Keep-Alive: timeout=60
   Connection: keep-alive
 
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete deployment spboot-auth-service-deployment
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete deployment spboot-auth-service-deployment
 deployment.apps "spboot-auth-service-deployment" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete deployment hello-world-service-deployment
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete deployment hello-world-service-deployment
 deployment.apps "hello-world-service-deployment" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete deployment postgres
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete deployment postgres
 deployment.apps "postgres" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete deployment auth-hello-react-deployment
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete deployment auth-hello-react-deployment
 deployment.apps "auth-hello-react-deployment" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete svc spboot-auth-service
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete svc spboot-auth-service
 service "spboot-auth-service" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete svc hello-world-service
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete svc hello-world-service
 service "hello-world-service" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete svc postgres-service
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete svc postgres-service
 service "postgres-service" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete svc auth-hello-react-service
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete svc auth-hello-react-service
 service "auth-hello-react-service" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete all --all
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl delete all --all
 service "kubernetes" deleted from default namespace
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl get pods
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl get pods
 No resources found in default namespace.
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl get svc
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl get svc
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   11s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project> kubectl get all
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project> kubectl get all
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   37s
-PS C:\project\EmbarkX\docker-k8s-deployment\spboot-auth-service-react-project>
+PS C:\project\Niranjana\docker-k8s-deployment\spboot-auth-service-react-project>
